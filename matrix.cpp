@@ -1,13 +1,24 @@
 #include "matrix.hpp"
+// For how to use this class, see matrix/main.hpp
 
-// To do:
+// To do: (- not done, + done, ~ in progress) 
+
+// - Matrix inverse():
+
+// ~ Matrix operator*(const Matrix& other);
+// ~ Matrix& operator*=(const Matrix& other);
+
+// + Matrix(size_t rows, size_t cols);
+// + std::vector<double> toVec() const;
+// + std::vector< std::vector<double> > toNestedVec() const;
+// + std::vector<double> getRow(size_t i) const;
+// + std::vector<double> getCol(size_t j) const;
+// + Matrix '=' operator (all forms I can think would be useful)
 // + Matrix operator-(const Matrix& other);
 // + Matrix& operator-=(const Matrix& other);
-
 // + Matrix operator*(const double scalar);
 // + Matrix& operator*=(const double scalar);
-
-// - Matrix& operatorT(); (Transpose the matrix)
+// + Matrix& operatorT(); (Transpose the matrix)
 
 Matrix::Matrix(size_t rows, size_t cols)
 : mRows(rows),
@@ -26,6 +37,10 @@ double Matrix::operator()(size_t i, size_t j) const
     return mData[i * mCols + j];
 }
 
+Matrix::~Matrix() 
+{
+}
+
 Matrix& Matrix::operator=(const Matrix& other)
 {
     if (this != &other)
@@ -33,6 +48,33 @@ Matrix& Matrix::operator=(const Matrix& other)
         mRows = other.mRows;
         mCols = other.mCols;
         mData = other.mData;
+    }
+    return *this;
+}
+
+Matrix& Matrix::operator=(const std::vector<std::vector<double> >& values)
+{
+    for (int i = 0; i < mRows; i++) 
+    {
+        for (int j = 0; j < mCols; j++) 
+        {
+            mData[i*mCols + j] = values[i][j];
+        }
+    }
+    return *this;
+}
+
+Matrix& Matrix::operator=(const std::vector<double>& values)
+{
+    mData = values;
+    return *this;
+}
+
+Matrix& Matrix::operator=(const double scalar)
+{
+    for (auto& e : mData)
+    {
+        e = scalar;
     }
     return *this;
 }
@@ -115,6 +157,52 @@ Matrix& Matrix::operator-=(const Matrix& other)
     return *this;
 }
 
+Matrix Matrix::operator*(const Matrix& other)
+{
+    if (mCols == other.mRows)
+    {
+        Matrix result(mRows, other.mCols);
+        for (int i = 0; i < mRows; i++)
+        {
+            for (int j = 0 ; j < other.mCols; j++)
+            {
+                for (int k = 0; k < mCols; k++)
+                {
+                    result.mData[i*other.mCols + j] += mData[i*mCols + k] * other.mData[k*other.mCols + j];
+                }
+            }
+        }
+        return result;
+    }
+    else
+    {
+        std::cout << "Matrix dimensions do not match!" << std::endl;
+    }
+}
+
+Matrix& Matrix::operator*=(const Matrix& other)
+{
+    if (mCols == other.mRows)
+    {
+        Matrix result(mRows, other.mCols);
+        for (int i = 0; i < mRows; i++)
+        {
+            for (int j = 0 ; j < other.mCols; j++)
+            {
+                for (int k = 0; k < mCols; k++)
+                {
+                    result.mData[i*other.mCols + j] += mData[i*mCols + k] * other.mData[k*other.mCols + j];
+                }
+            }
+        }
+        return result;
+    }
+    else
+    {
+        std::cout << "Matrix dimensions do not match!" << std::endl;
+    }
+}
+
 Matrix Matrix::operator*(const double scalar)
 {
     Matrix result(mRows, mCols);
@@ -165,6 +253,46 @@ void Matrix::out() const
         c++;
     }
     std::cout << std::endl;
+}
+
+std::vector<double> Matrix::toVec() const
+{
+    return mData;
+}
+
+std::vector< std::vector<double> > Matrix::toNestedVec() const
+{
+    std::vector< std::vector<double> > result;
+    for (int i = 0; i < mRows; i++)
+    {
+        std::vector<double> row;
+        row = getRow(i);
+        if (i != (mRows))
+        {
+            result.push_back(row);
+        }
+    }
+    return result;
+}
+
+std::vector<double> Matrix::getRow(size_t i) const
+{
+    std::vector<double> result;
+    for (int j = 0; j < mCols; j++)
+    {
+        result.push_back(mData[i*mCols + j]);
+    }
+    return result;
+}
+
+std::vector<double> Matrix::getCol(size_t j) const
+{
+    std::vector<double> result;
+    for (int i = 0; i < mRows; i++)
+    {
+        result.push_back(mData[i*mCols + j]);
+    }
+    return result;
 }
 
 Matrix Matrix::transpose() const

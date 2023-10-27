@@ -13,8 +13,14 @@ public:
     double& operator()(size_t i, size_t j);
     double operator()(size_t i, size_t j) const;
 
+    // destructor
+    ~Matrix();
+
     // operator overloading
     Matrix& operator=(const Matrix& other);
+    Matrix& operator=(const std::vector<double>& values);
+    Matrix& operator=(const std::vector<std::vector<double> >& values);
+    Matrix& operator=(const double scalar);
 
     Matrix operator+(const Matrix& other);
     Matrix& operator+=(const Matrix& other);
@@ -22,6 +28,9 @@ public:
     Matrix operator-(const Matrix& other);
     Matrix& operator-=(const Matrix& other);
 
+    Matrix operator*(const Matrix& other);
+    Matrix& operator*=(const Matrix& other);
+    
     Matrix operator*(const double scalar);
     Matrix& operator*=(const double scalar);
 
@@ -32,6 +41,11 @@ public:
 
     // return or output values
     void out() const;
+    std::vector<double> toVec() const;
+    std::vector< std::vector<double> > toNestedVec() const;
+    std::vector<double> getRow(size_t i) const;
+    std::vector<double> getCol(size_t j) const;
+
     Matrix transpose() const;
 
 private:
