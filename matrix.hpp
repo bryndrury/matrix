@@ -30,7 +30,7 @@ public:
 
     Matrix operator*(const Matrix& other);
     Matrix& operator*=(const Matrix& other);
-    
+
     Matrix operator*(const double scalar);
     Matrix& operator*=(const double scalar);
 
@@ -46,6 +46,7 @@ public:
     std::vector<double> getRow(size_t i) const;
     std::vector<double> getCol(size_t j) const;
 
+    // matrix operations (will include more later)
     Matrix transpose() const;
 
 private:

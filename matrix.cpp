@@ -20,6 +20,7 @@
 // + Matrix& operator*=(const double scalar);
 // + Matrix& operatorT(); (Transpose the matrix)
 
+// Constructor and Destructor
 Matrix::Matrix(size_t rows, size_t cols)
 : mRows(rows),
   mCols(cols),
@@ -41,6 +42,8 @@ Matrix::~Matrix()
 {
 }
 
+
+// Operator overloading
 Matrix& Matrix::operator=(const Matrix& other)
 {
     if (this != &other)
@@ -225,6 +228,8 @@ Matrix& Matrix::operator*=(const double scalar)
     return *this;
 }
 
+
+// Set values
 void Matrix::setValues(const std::vector<std::vector<double> >& values) {
     for (int i = 0; i < mRows; i++) 
     {
@@ -239,6 +244,8 @@ void Matrix::setValues(const std::vector<double>& values) {
     mData = values;
 }
 
+
+// Return or output values
 void Matrix::out() const
 {
     int c = 0;
@@ -295,6 +302,8 @@ std::vector<double> Matrix::getCol(size_t j) const
     return result;
 }
 
+
+// Matrix transpose and inverse (inverse not yet implemented)
 Matrix Matrix::transpose() const
 {
     Matrix result(mCols, mRows);
