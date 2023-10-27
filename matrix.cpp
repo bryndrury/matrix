@@ -1,5 +1,14 @@
 #include "matrix.hpp"
 
+// To do:
+// + Matrix operator-(const Matrix& other);
+// + Matrix& operator-=(const Matrix& other);
+
+// + Matrix operator*(const double scalar);
+// + Matrix& operator*=(const double scalar);
+
+// - Matrix& operatorT(); (Transpose the matrix)
+
 Matrix::Matrix(size_t rows, size_t cols)
 : mRows(rows),
   mCols(cols),
@@ -67,6 +76,81 @@ Matrix& Matrix::operator+=(const Matrix& other)
     return *this;
 }
 
+Matrix Matrix::operator-(const Matrix& other)
+{
+    Matrix result(mRows, mCols);
+    if (mRows == other.mRows || mCols == other.mCols)
+    {
+        for (int i = 0; i < mRows; i++)
+        {
+            for (int j = 0; j < mCols; j++)
+            {
+                result.mData[i*mCols + j] = mData[i*mCols + j] - other.mData[i*mCols + j];
+            }
+        }
+    }
+    else
+    {
+        std::cout << "Matrix dimensions do not match!" << std::endl;
+    }
+    return result;
+}
+
+Matrix& Matrix::operator-=(const Matrix& other)
+{
+    if (mRows == other.mRows || mCols == other.mCols)
+    {
+        for (int i = 0; i < mRows; i++)
+        {
+            for (int j = 0; j < mCols; j++)
+            {
+                mData[i*mCols + j] -= other.mData[i*mCols + j];
+            }
+        }
+    }
+    else
+    {
+        std::cout << "Matrix dimensions do not match!" << std::endl;
+    }
+    return *this;
+}
+
+Matrix Matrix::operator*(const double scalar)
+{
+    Matrix result(mRows, mCols);
+    for (int i = 0; i < mRows; i++)
+    {
+        for (int j = 0 ; j < mCols; j++)
+        {
+            result.mData[i*mCols + j] = mData[i*mCols + j] * scalar;
+        }
+    }
+    return result;
+}
+
+Matrix& Matrix::operator*=(const double scalar)
+{
+    for (auto& e : mData)
+    {
+        e *= scalar;
+    }
+    return *this;
+}
+
+void Matrix::setValues(const std::vector<std::vector<double> >& values) {
+    for (int i = 0; i < mRows; i++) 
+    {
+        for (int j = 0; j < mCols; j++) 
+        {
+            mData[i*mCols + j] = values[i][j];
+        }
+    }
+}
+
+void Matrix::setValues(const std::vector<double>& values) {
+    mData = values;
+}
+
 void Matrix::out() const
 {
     int c = 0;
@@ -83,14 +167,22 @@ void Matrix::out() const
     std::cout << std::endl;
 }
 
-void Matrix::setValues(const std::vector<std::vector<double> >& values) {
-    for (int i = 0; i < mRows; i++) {
-        for (int j = 0; j < mCols; j++) {
-            mData[i*mCols + j] = values[i][j];
+Matrix Matrix::transpose() const
+{
+    Matrix result(mCols, mRows);
+    for (int i = 0; i < mRows; i++)
+    {
+        for (int j = 0; j < mCols; j++)
+        {
+            if (i != j)
+            {
+                result.mData[j*mRows + i] = mData[i*mCols + j];
+            }
+            else
+            {
+                result.mData[i*mCols + j] = mData[i*mCols + j];
+            }
         }
     }
-}
-
-void Matrix::setValues(const std::vector<double>& values) {
-    mData = values;
+    return result;
 }

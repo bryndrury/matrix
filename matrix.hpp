@@ -15,8 +15,16 @@ public:
 
     // operator overloading
     Matrix& operator=(const Matrix& other);
+
     Matrix operator+(const Matrix& other);
     Matrix& operator+=(const Matrix& other);
+
+    Matrix operator-(const Matrix& other);
+    Matrix& operator-=(const Matrix& other);
+
+    Matrix operator*(const double scalar);
+    Matrix& operator*=(const double scalar);
+
 
     // set values
     void setValues(const std::vector<std::vector<double> >& values);
@@ -24,6 +32,7 @@ public:
 
     // return or output values
     void out() const;
+    Matrix transpose() const;
 
 private:
     size_t mRows;
