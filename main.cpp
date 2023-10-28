@@ -1,6 +1,6 @@
 #include <iostream>
 #include <ctime>
-#include "matrix.h"
+#include "matrix.hpp"
 
 int main() 
 {
@@ -158,6 +158,7 @@ int main()
     result = mat3 * mat4;
     std::cout << "Result: " << std::endl;
     result.out();
+    std::cout << "\nSize of result matrix: " << result.size() << std::endl;
 
     std::cout << "\nMatrix four * matrix three:" << std::endl; 
     mat4 *= mat3;

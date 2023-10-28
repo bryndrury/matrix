@@ -271,6 +271,11 @@ std::vector<size_t> Matrix::shape() const
     return result;
 }
 
+int Matrix::size() const
+{
+    return mData.size();
+}
+
 std::vector<double> Matrix::toVec() const
 {
     return mData;
