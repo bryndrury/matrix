@@ -130,7 +130,7 @@ int main()
     std::cout << std::endl;
 
     // Matrix multiplication
-    std::cout << "\nMeltiplication: " << std::endl;
+    std::cout << "\nMultiplication: " << std::endl;
     std::cout << "\nMatrix one: " << std::endl;
     mat1.out();
     std::cout << "\nMatrix two: " << std::endl;
