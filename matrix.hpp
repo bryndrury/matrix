@@ -41,6 +41,7 @@ public:
 
     // return or output values
     void out() const;
+    std::vector<size_t> shape() const;
     std::vector<double> toVec() const;
     std::vector< std::vector<double> > toNestedVec() const;
     std::vector<double> getRow(size_t i) const;

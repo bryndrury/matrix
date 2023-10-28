@@ -1,6 +1,6 @@
 #include <iostream>
 #include <ctime>
-#include "matrix.hpp"
+#include "matrix.h"
 
 int main() 
 {
@@ -139,6 +139,30 @@ int main()
     result = mat1 * mat2;
     std::cout << "Result: " << std::endl;
     result.out();
+
+    std::vector< std::vector<double> > values3 = {{1},{2},{3},{4}};
+    std::vector< std::vector<double> > values4 = {{1,2,3,4}};
+
+    Matrix mat3(4,1);
+    Matrix mat4(1,4);
+
+    mat3 = values3;
+    mat4 = values4;
+
+    std::cout << "\nMatrix three: " << std::endl;
+    mat3.out();
+    std::cout << "\nMatrix four: " << std::endl;
+    mat4.out();
+
+    std::cout << "\nMatrix three * matrix four as a result:" << std::endl;
+    result = mat3 * mat4;
+    std::cout << "Result: " << std::endl;
+    result.out();
+
+    std::cout << "\nMatrix four * matrix three:" << std::endl; 
+    mat4 *= mat3;
+    std::cout << "Result: " << std::endl;
+    mat4.out();
 
     return 0;
 }

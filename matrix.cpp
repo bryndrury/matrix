@@ -198,7 +198,8 @@ Matrix& Matrix::operator*=(const Matrix& other)
                 }
             }
         }
-        return result;
+        *this = result;
+        return *this;
     }
     else
     {
@@ -230,7 +231,8 @@ Matrix& Matrix::operator*=(const double scalar)
 
 
 // Set values
-void Matrix::setValues(const std::vector<std::vector<double> >& values) {
+void Matrix::setValues(const std::vector<std::vector<double> >& values) 
+{
     for (int i = 0; i < mRows; i++) 
     {
         for (int j = 0; j < mCols; j++) 
@@ -240,7 +242,8 @@ void Matrix::setValues(const std::vector<std::vector<double> >& values) {
     }
 }
 
-void Matrix::setValues(const std::vector<double>& values) {
+void Matrix::setValues(const std::vector<double>& values) 
+{
     mData = values;
 }
 
@@ -260,6 +263,12 @@ void Matrix::out() const
         c++;
     }
     std::cout << std::endl;
+}
+
+std::vector<size_t> Matrix::shape() const
+{
+    std::vector<size_t> result = {mRows, mCols};
+    return result;
 }
 
 std::vector<double> Matrix::toVec() const
@@ -323,3 +332,4 @@ Matrix Matrix::transpose() const
     }
     return result;
 }
+
